@@ -1,0 +1,26 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ] # Tự động chạy khi bạn push code lên nhánh main
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Chạy trên máy ảo Ubuntu của GitHub
+
+    steps:
+    - uses: actions/checkout@v4 # Lấy code từ repo xuống máy ảo
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4 # Cài đặt môi trường Node.js
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install # Cài đặt thư viện (giống bước bạn làm lúc nãy)
+
+    - name: Run Tests with Coverage
+      run: npm run test -- --coverage # Chạy test và xuất bảng báo cáo
